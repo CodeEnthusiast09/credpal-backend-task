@@ -1,0 +1,419 @@
+{
+  "info": {
+    "name": "Loan Management API",
+    "_postman_id": "loan-mgmt-api-2026",
+    "description": "Complete CRUD API for Loan Management System with Authentication",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:4000",
+      "type": "string"
+    },
+    {
+      "key": "userToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "adminToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "loanId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('userToken', response.data.token);",
+                  "    console.log('User token saved:', response.data.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "register"]
+            },
+            "description": "Register a new user account"
+          },
+          "response": []
+        },
+        {
+          "name": "Login User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('userToken', response.data.token);",
+                  "    console.log('User logged in, token saved');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Login with existing user credentials"
+          },
+          "response": []
+        },
+        {
+          "name": "Login Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('adminToken', response.data.token);",
+                  "    console.log('Admin logged in, token saved');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"supersecurepassword\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Login as admin"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Loans - User",
+      "item": [
+        {
+          "name": "Create Loan Request",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('loanId', response.data._id);",
+                  "    console.log('Loan ID saved:', response.data._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 50000,\n  \"purpose\": \"Business expansion and equipment purchase for my startup company\",\n  \"duration\": 24\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/loans",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "loans"]
+            },
+            "description": "Create a new loan request"
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Loans",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/loans/my-loans",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "loans", "my-loans"]
+            },
+            "description": "Get all loans for the authenticated user"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Loan by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/loans/{{loanId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "loans", "{{loanId}}"]
+            },
+            "description": "Get specific loan details"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Loan (Pending Only)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 75000,\n  \"purpose\": \"Updated: Business expansion, equipment, and working capital\",\n  \"duration\": 36\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/loans/{{loanId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "loans", "{{loanId}}"]
+            },
+            "description": "Update pending loan request"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Loan (Pending Only)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/loans/{{loanId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "loans", "{{loanId}}"]
+            },
+            "description": "Delete pending loan request"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Loans - Admin",
+      "item": [
+        {
+          "name": "Get All Loans",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/loans",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "loans"]
+            },
+            "description": "Get all loan requests (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Loans by Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/loans?status=pending",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "loans"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "pending",
+                  "description": "pending | approved | rejected | disbursed | completed | cancelled"
+                }
+              ]
+            },
+            "description": "Filter loans by status"
+          },
+          "response": []
+        },
+        {
+          "name": "Approve Loan",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"approved\",\n  \"interestRate\": 6.5\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/loans/{{loanId}}/approve",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "loans", "{{loanId}}", "approve"]
+            },
+            "description": "Approve a loan request with custom interest rate"
+          },
+          "response": []
+        },
+        {
+          "name": "Reject Loan",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"rejected\",\n  \"rejectionReason\": \"Insufficient credit score and income verification\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/loans/{{loanId}}/approve",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "loans", "{{loanId}}", "approve"]
+            },
+            "description": "Reject a loan request with reason"
+          },
+          "response": []
+        },
+        {
+          "name": "Disburse Loan",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/loans/{{loanId}}/disburse",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "loans", "{{loanId}}", "disburse"]
+            },
+            "description": "Mark approved loan as disbursed"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/",
+          "host": ["{{baseUrl}}"],
+          "path": [""]
+        },
+        "description": "Check if API is running"
+      },
+      "response": []
+    }
+  ]
+}
