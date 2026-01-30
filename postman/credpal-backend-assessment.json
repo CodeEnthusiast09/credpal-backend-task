@@ -1,32 +1,11 @@
 {
   "info": {
+    "_postman_id": "9fb2eb33-6908-4ac9-af9c-1a5aa6511f2b",
     "name": "Loan Management API",
-    "_postman_id": "loan-mgmt-api-2026",
     "description": "Complete CRUD API for Loan Management System with Authentication",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "29713129"
   },
-  "variable": [
-    {
-      "key": "baseUrl",
-      "value": "https://loan-management-api.up.railway.app",
-      "type": "string"
-    },
-    {
-      "key": "userToken",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "adminToken",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "loanId",
-      "value": "",
-      "type": "string"
-    }
-  ],
   "item": [
     {
       "name": "Authentication",
@@ -414,6 +393,28 @@
         "description": "Check if API is running"
       },
       "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://loan-management-api.up.railway.app",
+      "type": "string"
+    },
+    {
+      "key": "userToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "adminToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "loanId",
+      "value": "",
+      "type": "string"
     }
   ]
 }
