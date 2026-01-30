@@ -25,7 +25,6 @@ app.get("/", (_req: Request, res: Response) => {
   res.json({
     success: true,
     message: "Loan Management API is running",
-    version: "1.0.0",
     timestamp: new Date().toISOString(),
   });
 });

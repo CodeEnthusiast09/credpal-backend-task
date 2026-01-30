@@ -10,7 +10,8 @@
     "esModuleInterop": true,
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./src",
+    "rootDir": "./src",
+    "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
@@ -19,12 +20,12 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@/*": ["./*"],
-      "@modules/*": ["modules/*"],
-      "@middleware/*": ["middleware/*"],
-      "@utils/*": ["utils/*"],
-      "@types": ["types/index"],
-      "@db/*": ["db/*"]
+      "@/*": ["src/*"],
+      "@modules/*": ["src/modules/*"],
+      "@middleware/*": ["src/middleware/*"],
+      "@utils/*": ["src/utils/*"],
+      "@types": ["src/types/index"],
+      "@db/*": ["src/db/*"]
     }
   },
   "include": ["src/**/*"],
